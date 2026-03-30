@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orvian — AI Employees for Engineering Firms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:     #fdf5f2;
+    --bg2:    #f7ece7;
+    --bg3:    #f0e3dc;
+    --border: rgba(0,0,0,0.08);
+    --border-h: rgba(0,0,0,0.16);
+    --text:   #1a1310;
+    --muted:  #8a7f78;
+    --muted2: #665f59;
+    --accent: #b8895a;
+    --accent2:#8f6840;
+    --green:  #2a7a4e;
+    --red:    #b03535;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Geist', sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.032;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 52px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(253,245,242,0.88);
+    backdrop-filter: blur(14px);
+  }
+
+  .logo {
+    font-family: 'Geist', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .logo span { color: var(--accent); }
+
+  nav ul { display: flex; list-style: none; gap: 28px; align-items: center; }
+  nav ul a { color: var(--muted); text-decoration: none; font-size: 13.5px; font-weight: 400; transition: color 0.18s; }
+  nav ul a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent) !important;
+    color: #fff !important;
+    padding: 7px 18px;
+    border-radius: 5px;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    transition: opacity 0.18s !important;
+  }
+  .nav-cta:hover { opacity: 0.82 !important; }
+
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 130px 24px 80px;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 15%; left: 50%;
+    transform: translateX(-50%);
+    width: 700px; height: 600px;
+    background: radial-gradient(ellipse, rgba(210,150,120,0.15) 0%, transparent 68%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border-h);
+    background: rgba(0,0,0,0.04);
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 12.5px;
+    color: var(--muted2);
+    margin-bottom: 36px;
+    animation: fadeUp 0.55s ease both;
+  }
+
+  .live-dot {
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2.2s ease infinite;
+  }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: clamp(44px, 6.5vw, 84px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    max-width: 860px;
+    margin-bottom: 26px;
+    animation: fadeUp 0.55s ease 0.08s both;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+
+  .hero-sub {
+    font-size: clamp(15px, 1.8vw, 18px);
+    color: var(--muted2);
+    max-width: 540px;
+    font-weight: 300;
+    margin-bottom: 44px;
+    line-height: 1.65;
+    animation: fadeUp 0.55s ease 0.16s both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.55s ease 0.24s both;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: 12px 26px;
+    border-radius: 6px;
+    font-size: 14.5px;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: 'Geist', sans-serif;
+    transition: opacity 0.18s, transform 0.18s;
+  }
+  .btn-primary:hover { opacity: 0.84; transform: translateY(-1px); }
+
+  .btn-ghost {
+    color: var(--muted2);
+    padding: 12px 22px;
+    border-radius: 6px;
+    font-size: 14.5px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: border-color 0.18s, color 0.18s;
+  }
+  .btn-ghost:hover { border-color: var(--border-h); color: var(--text); }
+
+  .stats-bar {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .stat-item { padding: 36px 48px; border-right: 1px solid var(--border); text-align: center; }
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Geist', sans-serif;
+    font-size: 52px; font-weight: 300;
+    color: var(--text);
+    letter-spacing: -0.04em;
+    line-height: 1; margin-bottom: 8px;
+  }
+  .stat-num span { font-size: 30px; color: var(--muted); letter-spacing: -0.02em; font-weight: 300; }
+  .stat-lbl { font-size: 13px; color: var(--muted); font-weight: 300; }
+
+  hr.divider { position: relative; z-index: 1; border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  section {
+    position: relative; z-index: 1;
+    padding: 96px 52px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    display: block;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 18px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: clamp(30px, 4vw, 52px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 18px;
+  }
+  h2 em { font-style: italic; color: var(--accent); }
+
+  .section-sub {
+    font-size: 16.5px; color: var(--muted2); font-weight: 300;
+    max-width: 510px; line-height: 1.65; margin-bottom: 52px;
+  }
+
+  .prob-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+  }
+
+  .prob-card { background: var(--bg2); padding: 30px; transition: background 0.18s; }
+  .prob-card:hover { background: var(--bg3); }
+
+  .prob-icon {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding: 0 9px;
+    border: 1px solid var(--border-h);
+    border-radius: 5px;
+    margin-bottom: 14px;
+    color: var(--muted2);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    font-family: 'Geist', sans-serif;
+  }
+
+  .prob-card h3 { font-size: 16px; font-weight: 500; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .prob-card p  { font-size: 13.5px; color: var(--muted2); line-height: 1.6; }
+
+  .cost-tag {
+    display: inline-block; margin-top: 14px;
+    font-size: 11.5px; color: var(--red);
+    border: 1px solid rgba(248,113,113,0.18);
+    background: rgba(248,113,113,0.05);
+    padding: 3px 10px; border-radius: 100px;
+  }
+
+  .svc-list {
+    display: flex; flex-direction: column;
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+  }
+
+  .svc-row {
+    display: grid;
+    grid-template-columns: 240px 1fr auto;
+    align-items: center;
+    gap: 28px; padding: 26px 30px;
+    background: var(--bg2); transition: background 0.18s;
+  }
+  .svc-row:hover { background: var(--bg3); }
+
+  .svc-name { font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
+  .svc-desc { font-size: 13.5px; color: var(--muted2); line-height: 1.55; }
+  .svc-save { font-size: 12.5px; color: var(--green); white-space: nowrap; text-align: right; font-weight: 500; }
+
+  .steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+
+  .step { position: relative; }
+
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px; color: rgba(0,0,0,0.07);
+    line-height: 1; margin-bottom: 14px;
+  }
+
+  .step h3 { font-size: 15px; font-weight: 500; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .step p  { font-size: 13.5px; color: var(--muted2); line-height: 1.6; }
+
+  .step-line {
+    position: absolute; top: 26px; right: -12px;
+    width: 24px; height: 1px; background: var(--border-h);
+  }
+  .step:last-child .step-line { display: none; }
+
+  .price-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+
+  .price-card {
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 30px; background: var(--bg2);
+    position: relative; transition: border-color 0.18s;
+  }
+  .price-card:hover { border-color: var(--border-h); }
+  .price-card.feat { border-color: var(--accent); background: linear-gradient(135deg,rgba(184,137,90,0.08),transparent); }
+
+  .feat-badge {
+    position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+    background: var(--accent); color: #fff;
+    font-size: 10.5px; font-weight: 600;
+    padding: 3px 14px; border-radius: 0 0 7px 7px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  .p-lbl { font-size: 12px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.09em; font-weight: 500; }
+  .p-amt { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 400; color: var(--text); letter-spacing: -0.03em; line-height: 1; margin-bottom: 4px; }
+  .p-per { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+  .p-feats { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 26px; }
+  .p-feats li { font-size: 13.5px; color: var(--muted2); display: flex; gap: 9px; align-items: flex-start; }
+  .p-feats li::before { content: '+'; color: var(--green); font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+
+  .btn-card {
+    display: block; width: 100%; text-align: center;
+    padding: 10px; border-radius: 6px;
+    border: 1px solid var(--border); color: var(--text);
+    text-decoration: none; font-size: 13.5px; font-weight: 500;
+    font-family: 'Geist', sans-serif;
+    transition: border-color 0.18s, background 0.18s;
+  }
+  .btn-card:hover { border-color: var(--border-h); background: rgba(255,255,255,0.04); }
+  .btn-card.pri { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-card.pri:hover { opacity: 0.84; }
+
+  .trust-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-top: 24px; }
+
+  .trust-card { border: 1px solid var(--border); border-radius: 9px; padding: 22px 24px; background: var(--bg2); }
+
+  .trust-marker {
+    display: inline-flex; align-items: center;
+    height: 26px; padding: 0 9px;
+    border: 1px solid var(--border-h); border-radius: 5px;
+    margin-bottom: 12px; color: var(--accent2);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+    font-family: 'Geist', sans-serif;
+  }
+
+  .trust-card h4 { font-size: 14.5px; font-weight: 500; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .trust-card p  { font-size: 13px; color: var(--muted2); line-height: 1.6; }
+
+  .cta-wrap {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 100px 48px;
+    overflow: hidden;
+  }
+
+  .cta-glow {
+    position: absolute; bottom: -80px; left: 50%; transform: translateX(-50%);
+    width: 560px; height: 400px;
+    background: radial-gradient(ellipse,rgba(210,150,120,0.12) 0%,transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-wrap h2 { max-width: 640px; margin: 0 auto 18px; }
+  .cta-wrap p { color: var(--muted2); font-size: 16.5px; font-weight: 300; max-width: 430px; margin: 0 auto 40px; }
+
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 28px 52px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-size: 12.5px; color: var(--muted); }
+  footer a { color: var(--muted); text-decoration: none; font-size: 12.5px; transition: color 0.18s; }
+  footer a:hover { color: var(--text); }
+  .foot-links { display: flex; gap: 22px; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.vis { opacity: 1; transform: translateY(0); }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #d4c8c0; border-radius: 3px; }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    nav ul { display: none; }
+    section { padding: 60px 20px; }
+    .stats-bar { grid-template-columns: 1fr; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .prob-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .price-grid { grid-template-columns: 1fr; }
+    .svc-row { grid-template-columns: 1fr; gap: 6px; }
+    .trust-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 14px; text-align: center; }
+    .cta-wrap { padding: 64px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">Orvian<span>.</span></a>
+  <ul>
+    <li><a href="#problems">Problems</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">Process</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#book" class="nav-cta">Book a call</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">
+    <span class="live-dot"></span>
+    Now accepting new clients
+  </div>
+  <h1>AI employees for<br><em>engineering firms</em></h1>
+  <p class="hero-sub">
+    We build custom AI agents that handle the document-heavy, repetitive work inside architecture, mechanical, electrical, plumbing, civil, and structural engineering firms — so your team focuses on engineering, not administration.
+  </p>
+  <div class="hero-ctas">
+    <a href="#book" class="btn-primary">Book a free discovery call</a>
+    <a href="#services" class="btn-ghost">
+      See what we automate
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</div>
+
+<div class="stats-bar reveal">
+  <div class="stat-item">
+    <div class="stat-num">$2–3<span>K</span></div>
+    <div class="stat-lbl">cost to process and respond to a single RFI</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">9<span>.7</span></div>
+    <div class="stat-lbl">days average RFI turnaround — per request</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">30<span>%</span></div>
+    <div class="stat-lbl">of billable hours lost to avoidable administration</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<section id="problems">
+  <span class="eyebrow reveal">The problem</span>
+  <h2 class="reveal">Your engineers spend their hours<br><em>on paperwork</em></h2>
+  <p class="section-sub reveal">A senior engineer billing at $120 per hour who spends 30% of their time on administration costs your firm $75,000 a year in lost capacity — before project delays are factored in.</p>
+
+  <div class="prob-grid reveal">
+    <div class="prob-card">
+      <div class="prob-icon">RFI</div>
+      <h3>RFI backlog</h3>
+      <p>Projects generate hundreds of requests for information. Each one takes an average of eight hours to log, research, and respond to. More than one in five never receive a reply at all — causing rework, disputes, and schedule slippage.</p>
+      <span class="cost-tag">$2–3K per RFI · 9.7-day average turnaround</span>
+    </div>
+    <div class="prob-card">
+      <div class="prob-icon">QA</div>
+      <h3>Specification compliance review</h3>
+      <p>Cross-referencing drawing sets against building code and project specifications is a two-to-three-week manual effort. Discrepancies found in the field cost far more to resolve than discrepancies found on paper.</p>
+      <span class="cost-tag">2–3 weeks per full review</span>
+    </div>
+    <div class="prob-card">
+      <div class="prob-icon">BID</div>
+      <h3>Proposal and scope writing</h3>
+      <p>Teams write 40 to 80 hours per submission, rebuilding from scratch each time — even though the majority of content is reusable from previous projects. Proposals that take two weeks to write lose to ones that take three days.</p>
+      <span class="cost-tag">40–80 hours per proposal</span>
+    </div>
+    <div class="prob-card">
+      <div class="prob-icon">RPT</div>
+      <h3>Project reporting and updates</h3>
+      <p>Project managers spend four to eight hours every week assembling status reports by hand, pulling from spreadsheets, emails, and disconnected software. That time does not appear on any invoice.</p>
+      <span class="cost-tag">4–8 hours per week, per project manager</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="services">
+  <span class="eyebrow reveal">What we automate</span>
+  <h2 class="reveal">AI agents built around<br><em>your actual workflows</em></h2>
+  <p class="section-sub reveal">We do not sell software subscriptions or generic chatbots. We build custom AI agents that integrate into your existing tools and processes — and produce measurable output from the first week.</p>
+
+  <div class="svc-list reveal">
+    <div class="svc-row">
+      <div class="svc-name">RFI Response Agent</div>
+      <div class="svc-desc">Reads your drawing set and project specifications. Drafts responses to incoming requests for information by pulling the relevant clauses and references. Routes complex requests to the appropriate discipline lead. Logs everything automatically to your project management system.</div>
+      <div class="svc-save">9 days down to same day</div>
+    </div>
+    <div class="svc-row">
+      <div class="svc-name">Specification Compliance Checker</div>
+      <div class="svc-desc">Compares drawing sets against the National Building Code, International Building Code, or project-specific specifications. Returns a structured discrepancy report ranked by risk level — in 48 hours instead of three weeks, before issues reach the field.</div>
+      <div class="svc-save">3 weeks down to 48 hours</div>
+    </div>
+    <div class="svc-row">
+      <div class="svc-name">Proposal and Scope Writer</div>
+      <div class="svc-desc">Generates first drafts using your past project wins, established fee structures, and existing boilerplate language. Your team reviews and refines a near-complete document rather than writing from a blank page every time.</div>
+      <div class="svc-save">80 hours down to under 10</div>
+    </div>
+    <div class="svc-row">
+      <div class="svc-name">Project Status Reporter</div>
+      <div class="svc-desc">Connects to your project management software, timesheets, and email. Automatically generates weekly owner updates and internal status reports — structured, accurate, and ready to send every Monday morning without manual assembly.</div>
+      <div class="svc-save">6 hours down to 20 minutes</div>
+    </div>
+    <div class="svc-row">
+      <div class="svc-name">Submittal Tracking Agent</div>
+      <div class="svc-desc">Logs incoming submittals, assigns reviewers, sends automated reminders for overdue responses, and maintains a complete audit trail. Removes the spreadsheet-and-email coordination loop that delays review cycles on every project.</div>
+      <div class="svc-save">Zero manual administration</div>
+    </div>
+    <div class="svc-row">
+      <div class="svc-name">Other repetitive workflows</div>
+      <div class="svc-desc">Meeting notes and action items, permit application packages, subcontractor correspondence, change order documentation, closeout packages, and more. If it is document-heavy and done the same way every time, it is a candidate for automation.</div>
+      <div class="svc-save">Custom scope</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="how">
+  <span class="eyebrow reveal">The process</span>
+  <h2 class="reveal">From first conversation to<br><em>running agent</em> in weeks</h2>
+  <p class="section-sub reveal">We start by understanding your workflow in depth before writing a single line of automation — because the details are exactly where generic solutions break down.</p>
+
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-line"></div>
+      <div class="step-num">01</div>
+      <h3>Discovery call</h3>
+      <p>Free 30-minute conversation. We map your three biggest administrative bottlenecks and put a concrete number on what each one costs your firm per year.</p>
+    </div>
+    <div class="step">
+      <div class="step-line"></div>
+      <div class="step-num">02</div>
+      <h3>Workflow audit</h3>
+      <p>Three hours of structured process mapping with your team. We deliver a written plan identifying your top automation opportunities, ranked by time saved and implementation speed.</p>
+    </div>
+    <div class="step">
+      <div class="step-line"></div>
+      <div class="step-num">03</div>
+      <h3>Build sprint</h3>
+      <p>We build and deploy your first AI workflow in two to four weeks. You receive a running agent integrated into your existing tools — not a prototype that requires another investment to go live.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Ongoing retainer</h3>
+      <p>Monthly engagement to maintain, iterate, and expand to additional workflows as your team identifies new opportunities and your firm grows into the system.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="pricing">
+  <span class="eyebrow reveal">Pricing</span>
+  <h2 class="reveal">A straightforward<br><em>engagement model</em></h2>
+  <p class="section-sub reveal">Start with the audit to validate the return before committing to a build. No long-term contracts required. No surprise invoices.</p>
+
+  <div class="price-grid reveal">
+    <div class="price-card">
+      <div class="p-lbl">Discovery</div>
+      <div class="p-amt">Free</div>
+      <div class="p-per">30-minute conversation</div>
+      <ul class="p-feats">
+        <li>Identify your top three bottlenecks</li>
+        <li>Estimate time and cost impact</li>
+        <li>Understand what is automatable today</li>
+        <li>No commitment required</li>
+      </ul>
+      <a href="#book" class="btn-card">Book now</a>
+    </div>
+    <div class="price-card feat">
+      <div class="feat-badge">Most popular</div>
+      <div class="p-lbl">Workflow Audit</div>
+      <div class="p-amt">$750</div>
+      <div class="p-per">one-time engagement</div>
+      <ul class="p-feats">
+        <li>Three hours of deep process mapping</li>
+        <li>Written action plan with return on investment estimates</li>
+        <li>Three automations ranked by impact</li>
+        <li>Includes build sprint proposal</li>
+      </ul>
+      <a href="#book" class="btn-card pri">Get started</a>
+    </div>
+    <div class="price-card">
+      <div class="p-lbl">Monthly Retainer</div>
+      <div class="p-amt">$2.5<span style="font-size:22px;color:var(--muted)">K/mo</span></div>
+      <div class="p-per">following build sprint</div>
+      <ul class="p-feats">
+        <li>Agent maintenance and iteration</li>
+        <li>Monthly workflow expansion</li>
+        <li>Priority response and support</li>
+        <li>Cancel with 30 days notice</li>
+      </ul>
+      <a href="#book" class="btn-card">Talk to us</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section>
+  <span class="eyebrow reveal">Data and privacy</span>
+  <h2 class="reveal">Your documents remain<br><em>completely confidential</em></h2>
+  <p class="section-sub reveal">Confidentiality is non-negotiable in engineering. Here is exactly how we handle your documents and data at every stage.</p>
+
+  <div class="trust-grid reveal">
+    <div class="trust-card">
+      <div class="trust-marker">API</div>
+      <h4>Enterprise API — not consumer AI</h4>
+      <p>We use commercial API endpoints operating under enterprise data agreements — not consumer AI products. Your inputs are never used to train any AI model, and are subject to automatic deletion policies. Full stop.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-marker">CA</div>
+      <h4>Canadian data residency available</h4>
+      <p>For firms requiring data to remain within Canadian jurisdiction, we deploy through AWS infrastructure hosted in Canadian regions. Your documents never leave the country.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-marker">NDA</div>
+      <h4>NDA before any document is shared</h4>
+      <p>We sign a mutual non-disclosure agreement and a data processing agreement before receiving any client files. You retain full ownership of all outputs. We keep nothing after the engagement ends.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-marker">OPS</div>
+      <h4>Deploy inside your own infrastructure</h4>
+      <p>For clients with strict information technology requirements, we build and deploy the entire solution inside your existing cloud environment using your own credentials. Your data never enters our systems at all.</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta-wrap" id="book">
+  <div class="cta-glow"></div>
+  <span class="eyebrow reveal">Get started</span>
+  <h2 class="reveal">Stop paying engineers<br>to do <em>administrative work</em></h2>
+  <p class="reveal">Book a free 30-minute call. We will identify your biggest time losses and tell you exactly what we would automate — with no commitment required on your end.</p>
+  <div class="reveal">
+    <a href="https://calendly.com" class="btn-primary" style="font-size:15px;padding:13px 30px;color:#fff;">Book your free discovery call</a>
+  </div>
+  <p class="reveal" style="margin-top:18px;font-size:13px;color:var(--muted)">Available remotely across North America</p>
+</div>
+
+<footer>
+  <a href="#" class="logo" style="font-size:16px">Orvian<span style="color:var(--accent)">.</span></a>
+  <p>2026 Orvian. All rights reserved.</p>
+  <div class="foot-links">
+    <a href="#">Privacy policy</a>
+    <a href="#">hello@orvian.ca</a>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  const secs = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('nav ul a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    secs.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
+    links.forEach(a => { a.style.color = a.getAttribute('href') === `#${cur}` ? '#f0f0f2' : ''; });
+  });
+</script>
+</body>
+</html>
