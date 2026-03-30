@@ -74,13 +74,16 @@
 
   .logo {
     font-family: 'Geist', sans-serif;
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 22px;
+    font-weight: 600;
     color: var(--text);
     text-decoration: none;
     letter-spacing: 0.02em;
   }
   .logo span { color: var(--accent); }
+  footer .logo {
+    font-size: 20px;
+  }
 
   nav ul { display: flex; list-style: none; gap: 28px; align-items: center; }
   nav ul a { color: var(--muted); text-decoration: none; font-size: 13.5px; font-weight: 400; transition: color 0.18s; }
@@ -432,6 +435,7 @@
     .steps { grid-template-columns: 1fr 1fr; }
     .svc-row { grid-template-columns: 1fr; gap: 6px; }
     .trust-grid { grid-template-columns: 1fr; }
+    .examples-list { grid-template-columns: 1fr; }
     footer { flex-direction: column; gap: 14px; text-align: center; }
     .cta-wrap { padding: 64px 20px; }
   }
@@ -517,42 +521,53 @@
 <hr class="divider">
 
 <section id="services">
-  <span class="eyebrow reveal">What we build</span>
+  <span class="eyebrow reveal">What we automate</span>
   <h2 class="reveal">Agentic systems that <em>execute,<br>not just assist</em></h2>
-  <p class="section-sub reveal">Unlike AI assistants that respond to prompts, agentic AI acts autonomously — planning multi-step tasks, making decisions, connecting to your systems, and delivering finished outputs without waiting to be asked.</p>
+  <p class="section-sub reveal">Any workflow that:</p>
 
-  <div class="svc-list reveal">
-    <div class="svc-row">
-      <div class="svc-name">Document Intelligence Agents</div>
-      <div class="svc-desc">Agentic systems that read, extract, cross-reference, and synthesize complex document sets — specifications, contracts, technical packages, and correspondence — producing structured outputs without manual review or rekeying.</div>
-      <div class="svc-tag">Hours → minutes</div>
-    </div>
-    <div class="svc-row">
-      <div class="svc-name">End-to-End Workflow Automation</div>
-      <div class="svc-desc">Multi-step processes that run from trigger to completion without human intervention. The agent receives an input, works through every required step in sequence, and delivers a finished output directly to the right place in your systems.</div>
-      <div class="svc-tag">Zero-touch execution</div>
-    </div>
-    <div class="svc-row">
-      <div class="svc-name">System Integration and Routing</div>
-      <div class="svc-desc">Agents that connect to your existing project management platforms, email, and document tools. They route information, assign tasks, send notifications, and maintain complete audit trails — across all your tools, automatically.</div>
-      <div class="svc-tag">Works inside your stack</div>
-    </div>
-    <div class="svc-row">
-      <div class="svc-name">Autonomous Reporting and Synthesis</div>
-      <div class="svc-desc">Agents that pull structured data from multiple sources on a defined schedule, organize it into your standard formats, and produce ready-to-send reports — without anyone assembling a spreadsheet or composing a summary.</div>
-      <div class="svc-tag">Consistent, no manual effort</div>
-    </div>
-    <div class="svc-row">
-      <div class="svc-name">Coordination and Follow-up Agents</div>
-      <div class="svc-desc">Agentic systems that track open items, send reminders, escalate delays, and maintain a complete log of every action taken — removing the coordination overhead that currently falls to your most senior, highest-cost people.</div>
-      <div class="svc-tag">Nothing falls through</div>
-    </div>
-    <div class="svc-row">
-      <div class="svc-name">Any rule-based, repetitive workflow</div>
-      <div class="svc-desc">If it follows a consistent process, involves structured documents, or repeats the same steps across every project — it is a candidate for agentic automation. We assess it, scope it, and build it.</div>
-      <div class="svc-tag">Custom scope</div>
-    </div>
-  </div>
+  <ul class="workflow-list reveal" style="list-style:none;padding-left:0;margin-bottom:32px;">
+    <li style="margin-bottom:8px;padding-left:20px;position:relative;">
+      <span style="position:absolute;left:0;color:var(--accent);">•</span>
+      follows repeatable steps
+    </li>
+    <li style="margin-bottom:8px;padding-left:20px;position:relative;">
+      <span style="position:absolute;left:0;color:var(--accent);">•</span>
+      involves documents or structured data
+    </li>
+    <li style="margin-bottom:8px;padding-left:20px;position:relative;">
+      <span style="position:absolute;left:0;color:var(--accent);">•</span>
+      requires coordination or back-and-forth
+    </li>
+    <li style="margin-bottom:8px;padding-left:20px;position:relative;">
+      <span style="position:absolute;left:0;color:var(--accent);">•</span>
+      consumes time without requiring expert judgment at every step
+    </li>
+  </ul>
+
+  <p class="section-sub reveal" style="margin-bottom:16px;">This includes workflows such as:</p>
+
+  <ul class="examples-list reveal" style="list-style:none;padding-left:0;margin-bottom:52px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px 24px;">
+    <li style="font-family:'Geist',sans-serif;font-size:13.5px;color:var(--muted2);padding-left:16px;position:relative;">
+      <span style="position:absolute;left:0;color:var(--accent2);">–</span>
+      RFI response drafting and logging
+    </li>
+    <li style="font-family:'Geist',sans-serif;font-size:13.5px;color:var(--muted2);padding-left:16px;position:relative;">
+      <span style="position:absolute;left:0;color:var(--accent2);">–</span>
+      Specification and compliance review
+    </li>
+    <li style="font-family:'Geist',sans-serif;font-size:13.5px;color:var(--muted2);padding-left:16px;position:relative;">
+      <span style="position:absolute;left:0;color:var(--accent2);">–</span>
+      Proposal and scope writing
+    </li>
+    <li style="font-family:'Geist',sans-serif;font-size:13.5px;color:var(--muted2);padding-left:16px;position:relative;">
+      <span style="position:absolute;left:0;color:var(--accent2);">–</span>
+      Project reporting and status updates
+    </li>
+    <li style="font-family:'Geist',sans-serif;font-size:13.5px;color:var(--muted2);padding-left:16px;position:relative;">
+      <span style="position:absolute;left:0;color:var(--accent2);">–</span>
+      Submittal tracking, routing, and review coordination
+    </li>
+  </ul>
 </section>
 
 <hr class="divider">
